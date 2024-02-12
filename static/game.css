@@ -1,0 +1,51 @@
+.back 
+{
+    position: absolute;
+    top: 0.75vw;
+    left: 2vw;
+
+    color: white;
+}
+.game-container 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+}
+.game-container .game
+{
+    width: 100vw;
+    height: calc(100vh - 5vw);
+}
+.game-container header,
+.game-container footer
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100vw;
+    height: 2.5vw;
+    background-color: black;
+}
+#player 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    position: absolute;
+
+    height: 2.5vw;
+    width: 2.5vw;
+    
+}
+#player img
+{
+    height: 15vw;
+}
