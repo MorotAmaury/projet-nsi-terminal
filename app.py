@@ -13,3 +13,7 @@ def game():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+#pour amaury ne pas effacer: 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
