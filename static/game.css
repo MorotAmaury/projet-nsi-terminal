@@ -43,10 +43,22 @@
 
     height: 2.5vw;
     width: 2.5vw;
+    background-color: blueviolet;
     
 }
-#player img
+#wall
 {
+<<<<<<< HEAD
+    position: absolute;
+    height: 2.5vw;
+    width: 2.5vw;
+    top: 500px;
+    left: 500px;
+}
+#wall img
+{
+    height: 2.5vw;
+=======
     height: 5vw;
 }
 #missile-container
@@ -66,4 +78,5 @@
     transform: translate(-50%, -50%);
     background-color: #38095e;
     transition: all ease 3s;
+>>>>>>> 3a7693534ca00cec48dd7124f4032c914fa8ddb1
 }

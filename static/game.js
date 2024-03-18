@@ -1,13 +1,38 @@
 let player = document.getElementById('player');
+<<<<<<< HEAD
+let wall = document.getElementById('wall');
+let leftPosition = 900;
+let topPosition = 500;
+let speed = 2;
+=======
 
 // partie sur le mouvement
 
 let xPos = 900; // position horizontal de depart
 let yPos = 500; // position vertical de depart
 let speed = 2; // vitesse du joueur
+>>>>>>> 3a7693534ca00cec48dd7124f4032c914fa8ddb1
 let keyState = {};
 
+let isCollide = (obstacle, player) => {
+    let obstacleRect = obstacle.getBoundingClientRect()
+    let playerRect = player.getBoundingClientRect()
+    return !(obstacleRect.right < playerRect.left || obstacleRect.left > playerRect.right || obstacleRect.bottom > playerRect || obstacleRect.top > playerRect.bottom);
+};
+
+
 let movePlayer = () => {
+<<<<<<< HEAD
+
+    player.style.left = leftPosition + 'px';
+    player.style.top = topPosition + 'px';
+};
+
+let updatePosition = () => {
+
+    if (keyState['ArrowLeft'] && leftPosition - speed > 100) {
+        leftPosition -= speed;
+=======
     player.style.left = xPos + 'px';
     player.style.top = yPos + 'px';
 };
@@ -15,6 +40,7 @@ let movePlayer = () => {
 let updatePosition = () => {
     if (keyState['ArrowLeft'] && xPos - speed > 0) { // aller a gauche
         xPos -= speed;
+>>>>>>> 3a7693534ca00cec48dd7124f4032c914fa8ddb1
     }
     if (keyState['ArrowRight'] && xPos + speed < (window.innerWidth - 50)) { // aller a droite
         xPos += speed;
@@ -40,8 +66,13 @@ document.addEventListener('keyup', analyseTouche);
 
 // Utilisation de setInterval pour une mise à jour continue
 setInterval(() => {
-    updatePosition();
+    if (!isCollide(wall, player)) {
+        updatePosition();
+    }
     movePlayer();
+<<<<<<< HEAD
+}, 1); // Environ 60 images par seconde
+=======
 }, 1); // Environ 60 images par seconde
 
 // partie tirer
@@ -81,3 +112,4 @@ document.addEventListener('click', (e) => {
 
 })
 
+>>>>>>> 3a7693534ca00cec48dd7124f4032c914fa8ddb1
