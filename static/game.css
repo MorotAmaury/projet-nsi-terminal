@@ -48,6 +48,7 @@
 }
 #wall
 {
+<<<<<<< HEAD
     position: absolute;
     height: 2.5vw;
     width: 2.5vw;
@@ -57,4 +58,18 @@
 #wall img
 {
     height: 2.5vw;
+=======
+    height: 15vw;
+}
+.test 
+{
+    position: absolute;
+
+    border-radius: 100%;
+    height: 3vw;
+    width: 3vw;
+    transform: translate(-50%, -50%);
+    background-color: red;
+    transition: all ease 3s;
+>>>>>>> 3a7693534ca00cec48dd7124f4032c914fa8ddb1
 }
