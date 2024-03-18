@@ -1,15 +1,25 @@
 let player = document.getElementById('player');
+let wall = document.getElementById('wall');
 let leftPosition = 900;
 let topPosition = 500;
 let speed = 2;
 let keyState = {};
 
+let isCollide = (obstacle, player) => {
+    let obstacleRect = obstacle.getBoundingClientRect()
+    let playerRect = player.getBoundingClientRect()
+    return !(obstacleRect.right < playerRect.left || obstacleRect.left > playerRect.right || obstacleRect.bottom > playerRect || obstacleRect.top > playerRect.bottom);
+};
+
+
 let movePlayer = () => {
+
     player.style.left = leftPosition + 'px';
     player.style.top = topPosition + 'px';
 };
 
 let updatePosition = () => {
+
     if (keyState['ArrowLeft'] && leftPosition - speed > 100) {
         leftPosition -= speed;
     }
@@ -37,7 +47,8 @@ document.addEventListener('keyup', analyseTouche);
 
 // Utilisation de setInterval pour une mise à jour continue
 setInterval(() => {
-    updatePosition();
+    if (!isCollide(wall, player)) {
+        updatePosition();
+    }
     movePlayer();
 }, 1); // Environ 60 images par seconde
-

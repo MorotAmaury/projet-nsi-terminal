@@ -43,9 +43,18 @@
 
     height: 2.5vw;
     width: 2.5vw;
+    background-color: blueviolet;
     
 }
-#player img
+#wall
 {
-    height: 15vw;
+    position: absolute;
+    height: 2.5vw;
+    width: 2.5vw;
+    top: 500px;
+    left: 500px;
+}
+#wall img
+{
+    height: 2.5vw;
 }
