@@ -47,16 +47,23 @@
 }
 #player img
 {
-    height: 15vw;
+    height: 5vw;
+}
+#missile-container
+{
+    position: absolute;
+    width: 100%;
+    height: 90%;
+    overflow: hidden;
 }
 .test 
 {
     position: absolute;
 
-    border-radius: 100%;
-    height: 3vw;
-    width: 3vw;
+    border-radius: 50%;
+    height: 2vw;
+    width: 2vw;
     transform: translate(-50%, -50%);
-    background-color: red;
+    background-color: #38095e;
     transition: all ease 3s;
 }

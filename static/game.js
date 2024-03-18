@@ -13,16 +13,16 @@ let movePlayer = () => {
 };
 
 let updatePosition = () => {
-    if (keyState['ArrowLeft'] && xPos - speed > 50) { // aller a gauche
+    if (keyState['ArrowLeft'] && xPos - speed > 0) { // aller a gauche
         xPos -= speed;
     }
-    if (keyState['ArrowRight'] && xPos + speed < (window.innerWidth - 100)) { // aller a droite
+    if (keyState['ArrowRight'] && xPos + speed < (window.innerWidth - 50)) { // aller a droite
         xPos += speed;
     }
-    if (keyState['ArrowUp'] && yPos - speed > 150) { // aller en haut
+    if (keyState['ArrowUp'] && yPos - speed > 60) { // aller en haut
         yPos -= speed;
     }
-    if (keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 230)) { // aller en bas
+    if (keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 120)) { // aller en bas
         yPos += speed;
     }
 };
@@ -46,6 +46,8 @@ setInterval(() => {
 
 // partie tirer
 
+
+
 document.addEventListener('click', (e) => {
     const missile = document.createElement('div')
     missile.classList.add('test')
@@ -54,14 +56,28 @@ document.addEventListener('click', (e) => {
 
     document.getElementById('missile-container').appendChild(missile)
 
-    console.log(e.clientX, e.clientY);
-    let incrementationX = e.clientX / 10
-    let incrementationY = e.clientY / 10
-
-    while (parseInt(missile.style.left) > 0 || parseInt(missile.style.right) > 0)
-    {
-        missile.style.left += incrementationX
-        missile.style.top += incrementationY
+    let missile_mouvement = (incrementationX, incrementationY) => {
+        return new Promise(resolve => {
+            while (parseInt(missile.style.left) < window.innerWidth + 500 && parseInt(missile.style.left) > -500 && 
+            parseInt(missile.style.top) < window.innerHeight + 500 && parseInt(missile.style.top) > -500) 
+            {
+                console.log(parseInt(missile.style.left),  incrementationX);
+                missile.style.left = (parseInt(missile.style.left) + incrementationX) + 'px'
+                missile.style.top = (parseInt(missile.style.top) + incrementationY) + 'px'
+    
+            }
+            resolve()
+        })
     }
+
+    setTimeout(async() => {
+        let incrementationX = e.clientX - Math.abs(parseInt(missile.style.left))
+        let incrementationY = e.clientY - Math.abs(parseInt(missile.style.top))
+        await missile_mouvement(incrementationX, incrementationY)
+    }, 30)
+
+    
+        
+
 })
 
