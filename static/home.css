@@ -23,7 +23,9 @@
     width: 20vw;
     height: 3vw;
     border-radius: 1vw;
-    border: none;   
+    border: none;
+    font-size:large; 
+    font-style: bold;
 }
 .play-btn a 
 {

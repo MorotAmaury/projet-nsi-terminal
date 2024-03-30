@@ -16,25 +16,25 @@ let isCollide = (obstacle, player, position) => {
     // verifie la colision coter droit de l'obsstacle
     if (position === "left")
     {
-        return obstacleRect.right + 10 > playerRect.left && obstacleRect.top < playerRect.bottom && 
+        return obstacleRect.right + 5 > playerRect.left && obstacleRect.top < playerRect.bottom && 
         obstacleRect.bottom > playerRect.top && obstacleRect.left < playerRect.right
     }
     // verifie la colision coter gauche de l'obsstacle
     if(position === "right")
     {
-        return obstacleRect.left - 10 < playerRect.right && obstacleRect.top < playerRect.bottom && 
+        return obstacleRect.left - 5 < playerRect.right && obstacleRect.top < playerRect.bottom && 
         obstacleRect.bottom > playerRect.top && obstacleRect.right > playerRect.left
     }
     // verifie la colision coter bas de l'obsstacle
     if(position === "top")
     {
-        return obstacleRect.bottom + 10 > playerRect.top && obstacleRect.left < playerRect.right 
+        return obstacleRect.bottom + 5 > playerRect.top && obstacleRect.left < playerRect.right 
         && obstacleRect.right > playerRect.left && obstacleRect.top < playerRect.bottom
     }
     // verifie la colision coter haut de l'obsstacle
     if (position === "bottom") 
     {
-        return obstacleRect.top - 10 < playerRect.bottom && obstacleRect.left < playerRect.right && 
+        return obstacleRect.top - 5 < playerRect.bottom && obstacleRect.left < playerRect.right && 
         obstacleRect.right > playerRect.left && obstacleRect.bottom > playerRect.top
     }
 };
@@ -122,6 +122,14 @@ let movePlayer = () => {
 };
 
 let updatePosition = () => {
+    if (!isCollideToutLesMur(wall,water,player, "bottom") && keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 75)) { // aller en bas
+        yPos += speed;
+        player.classList.remove('runright', 'runleft', 'standing')
+        player.classList.add('rundown')
+    }
+    if (!isCollideToutLesMur(wall,water, player, "top") && keyState['ArrowUp'] && yPos - speed > 60) { // aller en haut
+        yPos -= speed;
+    }
     if (!isCollideToutLesMur(wall,water, player, "left") && keyState['ArrowLeft'] && xPos - speed > 0) { // aller a gauche
         xPos -= speed;
         player.classList.remove('runright', 'rundown', 'standing')
@@ -131,14 +139,6 @@ let updatePosition = () => {
         xPos += speed;
         player.classList.remove('runleft', 'rundown', 'standing')
         player.classList.add('runright')
-    }
-    if (!isCollideToutLesMur(wall,water, player, "top") && keyState['ArrowUp'] && yPos - speed > 60) { // aller en haut
-        yPos -= speed;
-    }
-    if (!isCollideToutLesMur(wall,water,player, "bottom") && keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 75)) { // aller en bas
-        yPos += speed;
-        player.classList.remove('runright', 'runleft', 'standing')
-        player.classList.add('rundown')
     }
     if (!(keyState['ArrowLeft']) && !(keyState['ArrowRight']) && !(keyState['ArrowUp']) && !(keyState['ArrowDown'])) {
         player.classList.remove('runright', 'runleft', 'rundown')
