@@ -3,34 +3,52 @@ let wall = document.getElementsByClassName('wall');
 let water = document.getElementsByClassName('water');
 let xPos = 900; // position horizontal de depart
 let yPos = 500; // position vertical de depart
-let speed = 2; // vitesse du joueur
+let speed = 3; // vitesse du joueur
 let keyState = {};
 
 let isCollide = (obstacle, player, position) => {
     let obstacleRect = obstacle.getBoundingClientRect()
     let playerRect = player.getBoundingClientRect()
+    // verifie la colision coter droit de l'obsstacle
     if (position === "left")
     {
-        return obstacleRect.right + 5 > playerRect.left && obstacleRect.top < playerRect.bottom && 
-        obstacleRect.bottom > playerRect.top
+        return obstacleRect.right + 10 > playerRect.left && obstacleRect.top < playerRect.bottom && 
+        obstacleRect.bottom > playerRect.top && obstacleRect.left < playerRect.right
     }
+    // verifie la colision coter gauche de l'obsstacle
     if(position === "right")
     {
-        return obstacleRect.left - 5 < playerRect.right && obstacleRect.top < playerRect.bottom && 
-        obstacleRect.bottom > playerRect.top
+        return obstacleRect.left - 10 < playerRect.right && obstacleRect.top < playerRect.bottom && 
+        obstacleRect.bottom > playerRect.top && obstacleRect.right > playerRect.left
     }
+    // verifie la colision coter bas de l'obsstacle
     if(position === "top")
     {
-        return obstacleRect.bottom + 5 > playerRect.top && obstacleRect.left < playerRect.right && obstacleRect.right > playerRect.left
+        return obstacleRect.bottom + 10 > playerRect.top && obstacleRect.left < playerRect.right 
+        && obstacleRect.right > playerRect.left && obstacleRect.top < playerRect.bottom
     }
+    // verifie la colision coter haut de l'obsstacle
     if (position === "bottom") 
     {
-        return obstacleRect.top - 5 < playerRect.bottom && obstacleRect.left < playerRect.right && obstacleRect.right > playerRect.left
+        return obstacleRect.top - 10 < playerRect.bottom && obstacleRect.left < playerRect.right && 
+        obstacleRect.right > playerRect.left && obstacleRect.bottom > playerRect.top
     }
 };
+let isCollideToutLesMur = (liste_mur, liste_eau, player, pos) => { 
+    let test = false;
+    Array.from(liste_mur).forEach(wall => {
+        if (isCollide(wall, player, pos)) {
+            test = true;
+        }
+    });
+    Array.from(liste_eau).forEach(eau => {
+        if (isCollide(eau, player, pos)) {
+            test = true;
+        }
+    })
+    return test;
+};
 
-
-//Générateur procedural aleatoire actuelllement
 document.addEventListener('DOMContentLoaded', function() {
 
     // Fonction pour générer un nombre aléatoire entre min et max
@@ -39,8 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Nombre d'éléments wall et water à générer
-    var numWalls = randomBetween(10, 25);
-    var numWaters = randomBetween(10, 25);
+    var numWalls = randomBetween(10,25);
+    var numWaters = randomBetween(10,25);
 
     // Div game
     var gameDiv = document.querySelector('.game');    
@@ -55,8 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
             gameDiv.appendChild(wall); // Append the wall element to the game container
         }
     }
-    
-
     // Fonction pour générer les éléments water
     let generateWaters = () => {
         for (var i = 0; i < numWaters; i++) {
@@ -80,16 +96,16 @@ let movePlayer = () => {
 };
 
 let updatePosition = () => {
-    if (!isCollide(wall, player, "left") && keyState['ArrowLeft'] && xPos - speed > 0) { // aller a gauche
+    if (!isCollideToutLesMur(wall,water, player, "left") && keyState['ArrowLeft'] && xPos - speed > 0) { // aller a gauche
         xPos -= speed;
     }
-    if (!isCollide(wall, player, "right") && keyState['ArrowRight'] && xPos + speed < (window.innerWidth - 50)) { // aller a droite
+    if (!isCollideToutLesMur(wall,water, player, "right") && keyState['ArrowRight'] && xPos + speed < (window.innerWidth - 50)) { // aller a droite
         xPos += speed;
     }
-    if (!isCollide(wall, player, "top") && keyState['ArrowUp'] && yPos - speed > 60) { // aller en haut
+    if (!isCollideToutLesMur(wall,water, player, "top") && keyState['ArrowUp'] && yPos - speed > 60) { // aller en haut
         yPos -= speed;
     }
-    if (!isCollide(wall,player, "bottom") && keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 120)) { // aller en bas
+    if (!isCollideToutLesMur(wall,water,player, "bottom") && keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 75)) { // aller en bas
         yPos += speed;
     }
 };
