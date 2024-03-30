@@ -1,8 +1,6 @@
 let player = document.getElementById('player');
-
-// partie sur le mouvement
-
-let wall = document.getElementById('wall');
+let wall = document.getElementsByClassName('wall');
+let water = document.getElementsByClassName('water');
 let xPos = 900; // position horizontal de depart
 let yPos = 500; // position vertical de depart
 let speed = 2; // vitesse du joueur
@@ -30,6 +28,50 @@ let isCollide = (obstacle, player, position) => {
         return obstacleRect.top - 5 < playerRect.bottom && obstacleRect.left < playerRect.right && obstacleRect.right > playerRect.left
     }
 };
+
+
+//Générateur procedural aleatoire actuelllement
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Fonction pour générer un nombre aléatoire entre min et max
+    let randomBetween = (min, max) => {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // Nombre d'éléments wall et water à générer
+    var numWalls = randomBetween(10, 25);
+    var numWaters = randomBetween(10, 25);
+
+    // Div game
+    var gameDiv = document.querySelector('.game');    
+
+    // Fonction pour générer les éléments wall
+    let generateWalls = () => {
+        for (var i = 0; i < numWalls; i++) {
+            var wall = document.createElement('div'); // Create img element
+            wall.classList.add('wall');
+            wall.style.left = randomBetween(0, gameDiv.offsetWidth - 50) + 'px'; // Position horizontale aléatoire
+            wall.style.top = randomBetween(0, gameDiv.offsetHeight - 50) + 'px'; // Position verticale aléatoire
+            gameDiv.appendChild(wall); // Append the wall element to the game container
+        }
+    }
+    
+
+    // Fonction pour générer les éléments water
+    let generateWaters = () => {
+        for (var i = 0; i < numWaters; i++) {
+            var water = document.createElement('div');
+            water.classList.add('water');
+            water.style.left = randomBetween(0, gameDiv.offsetWidth - 50) + 'px'; // Position horizontale aléatoire
+            water.style.top = randomBetween(0, gameDiv.offsetHeight - 50) + 'px'; // Position verticale aléatoire
+            gameDiv.appendChild(water);
+        }
+    }
+
+
+    generateWalls();
+    generateWaters();
+});
 
 
 let movePlayer = () => {
