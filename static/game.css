@@ -41,23 +41,29 @@
     
     position: absolute;
 
-    height: 5vw;
-    width: 5vw;
+    height: 2.5vw;
+    width: 2.5vw;
     background-color: blueviolet;
     
 }
-#wall
+.wall
 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     height: 2.5vw;
     width: 2.5vw;
-    top: 500px;
-    left: 500px;
+    background-color: gray;
 }
-#wall img
-{
+.water {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
     height: 2.5vw;
-    height: 5vw;
+    width: 2.5vw;
+    background-color: blue;
 }
 #missile-container
 {
