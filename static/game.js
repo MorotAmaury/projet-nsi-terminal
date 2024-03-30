@@ -3,12 +3,61 @@ let wall = document.getElementsByClassName('wall');
 let water = document.getElementsByClassName('water');
 let xPos = 900; // position horizontal de depart
 let yPos = 500; // position vertical de depart
-let speed = 2; // vitesse du joueur
+let speed = 3; // vitesse du joueur
 let keyState = {};
 
 
+//COLLISIONS
 
-//Générateur procedural aleatoire actuelllement
+
+let isCollide = (obstacle, player, position) => {
+    let obstacleRect = obstacle.getBoundingClientRect()
+    let playerRect = player.getBoundingClientRect()
+    // verifie la colision coter droit de l'obsstacle
+    if (position === "left")
+    {
+        return obstacleRect.right + 10 > playerRect.left && obstacleRect.top < playerRect.bottom && 
+        obstacleRect.bottom > playerRect.top && obstacleRect.left < playerRect.right
+    }
+    // verifie la colision coter gauche de l'obsstacle
+    if(position === "right")
+    {
+        return obstacleRect.left - 10 < playerRect.right && obstacleRect.top < playerRect.bottom && 
+        obstacleRect.bottom > playerRect.top && obstacleRect.right > playerRect.left
+    }
+    // verifie la colision coter bas de l'obsstacle
+    if(position === "top")
+    {
+        return obstacleRect.bottom + 10 > playerRect.top && obstacleRect.left < playerRect.right 
+        && obstacleRect.right > playerRect.left && obstacleRect.top < playerRect.bottom
+    }
+    // verifie la colision coter haut de l'obsstacle
+    if (position === "bottom") 
+    {
+        return obstacleRect.top - 10 < playerRect.bottom && obstacleRect.left < playerRect.right && 
+        obstacleRect.right > playerRect.left && obstacleRect.bottom > playerRect.top
+    }
+};
+
+let isCollideToutLesMur = (liste_mur, liste_eau, player, pos) => { 
+    let test = false;
+    Array.from(liste_mur).forEach(wall => {
+        if (isCollide(wall, player, pos)) {
+            test = true;
+        }
+    });
+    Array.from(liste_eau).forEach(eau => {
+        if (isCollide(eau, player, pos)) {
+            test = true;
+        }
+    })
+    return test;
+};
+
+
+//TERRAIN
+
+
 document.addEventListener('DOMContentLoaded', function() {
 
     // Fonction pour générer un nombre aléatoire entre min et max
@@ -46,8 +95,6 @@ document.addEventListener('DOMContentLoaded', function() {
             gameDiv.appendChild(wall); // Append the wall element to the game container
         }
     }
-    
-
     // Fonction pour générer les éléments water
     let generateWaters = () => {
         for (var i = 0; i < numWaters; i++) {
@@ -65,26 +112,30 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+//MOUVEMENT
+
+
 let movePlayer = () => {
     player.style.left = xPos + 'px';
     player.style.top = yPos + 'px';
 };
 
 let updatePosition = () => {
-    if (keyState['ArrowLeft'] && xPos - speed > 0) { // aller a gauche
+    if (!isCollideToutLesMur(wall,water, player, "left") && keyState['ArrowLeft'] && xPos - speed > 0) { // aller a gauche
         xPos -= speed;
         player.classList.remove('runright', 'rundown', 'standing')
         player.classList.add('runleft')
     }
-    if (keyState['ArrowRight'] && xPos + speed < (window.innerWidth - 50)) { // aller a droite
+    if (!isCollideToutLesMur(wall,water, player, "right") && keyState['ArrowRight'] && xPos + speed < (window.innerWidth - 50)) { // aller a droite
         xPos += speed;
         player.classList.remove('runleft', 'rundown', 'standing')
         player.classList.add('runright')
     }
-    if (keyState['ArrowUp'] && yPos - speed > 60) { // aller en haut
+    if (!isCollideToutLesMur(wall,water, player, "top") && keyState['ArrowUp'] && yPos - speed > 60) { // aller en haut
         yPos -= speed;
     }
-    if (keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 120)) { // aller en bas
+    if (!isCollideToutLesMur(wall,water,player, "bottom") && keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 75)) { // aller en bas
         yPos += speed;
         player.classList.remove('runright', 'runleft', 'standing')
         player.classList.add('rundown')
@@ -112,8 +163,8 @@ setInterval(() => {
     movePlayer();
 }, 1); // Environ 60 images par seconde
 
-// partie tirer
 
+//TIR
 
 
 document.addEventListener('click', (e) => {
