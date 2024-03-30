@@ -1,10 +1,9 @@
-body 
-{
+body {
     margin: 0;
     padding: 0;
-    background-color: #181818;
+    background: linear-gradient(to top, #13b40e, #0d8d0d); /* Dégradé du vert clair en haut (#6ca70f) au vert foncé en bas (#004d00) */
     color: white;
-    font-family: Arial, Helvetica, sans-serif ;
+    font-family: Arial, Helvetica, sans-serif;
 }
 h1 
 {

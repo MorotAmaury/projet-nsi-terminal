@@ -16,9 +16,22 @@ document.addEventListener('DOMContentLoaded', function() {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    let choice1of4 = (n1, n2, n3, n4) => {
+        let choix = Math.random();
+        if (choix < 0.25) {
+            return n1;
+        } else if  (choix < 0.5) {
+            return n2;
+        } else if (choix < 0.75) {
+            return n3;
+        } else {
+            return n4;
+        }
+    }
+
     // Nombre d'éléments wall et water à générer
-    var numWalls = randomBetween(10, 25);
-    var numWaters = randomBetween(10, 25);
+    var numWalls = randomBetween(15, 25);
+    var numWaters = randomBetween(15, 25);
 
     // Div game
     var gameDiv = document.querySelector('.game');    
@@ -28,8 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
         for (var i = 0; i < numWalls; i++) {
             var wall = document.createElement('div'); // Create img element
             wall.classList.add('wall');
-            wall.style.left = randomBetween(0, gameDiv.offsetWidth - 50) + 'px'; // Position horizontale aléatoire
-            wall.style.top = randomBetween(0, gameDiv.offsetHeight - 50) + 'px'; // Position verticale aléatoire
+            wall.style.left = choice1of4(randomBetween(50, window.innerWidth/4), randomBetween(window.innerWidth/4, window.innerWidth/2 - 50), randomBetween(window.innerWidth/2+50, window.innerWidth*3/4), randomBetween(window.innerWidth*3/4, window.innerWidth-50)) + 'px'; // Position aléatoire tout en empêchant le spawn du joueur dans un bloc
+            wall.style.top = choice1of4(randomBetween(50, window.innerHeight/4), randomBetween(window.innerHeight/4, window.innerHeight/2 - 50), randomBetween(window.innerHeight/2+50, window.innerHeight*3/4), randomBetween(window.innerHeight*3/4, window.innerHeight-50)) + 'px';// Facteur aléatoire de 4, augmenter permet de generer un meilleur aléatoire
             gameDiv.appendChild(wall); // Append the wall element to the game container
         }
     }
@@ -40,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
         for (var i = 0; i < numWaters; i++) {
             var water = document.createElement('div');
             water.classList.add('water');
-            water.style.left = randomBetween(0, gameDiv.offsetWidth - 50) + 'px'; // Position horizontale aléatoire
-            water.style.top = randomBetween(0, gameDiv.offsetHeight - 50) + 'px'; // Position verticale aléatoire
+            water.style.left = choice1of4(randomBetween(50, window.innerWidth/4), randomBetween(window.innerWidth/4, window.innerWidth/2 - 50), randomBetween(window.innerWidth/2+50, window.innerWidth*3/4), randomBetween(window.innerWidth*3/4, window.innerWidth-50)) + 'px'; // Position aléatoire tout en empêchant le spawn du joueur dans un bloc
+            water.style.top = choice1of4(randomBetween(50, window.innerHeight/4), randomBetween(window.innerHeight/4, window.innerHeight/2 - 50), randomBetween(window.innerHeight/2+50, window.innerHeight*3/4), randomBetween(window.innerHeight*3/4, window.innerHeight-50)) + 'px';// Facteur aléatoire de 4, augmenter permet de generer un meilleur aléatoire
             gameDiv.appendChild(water);
         }
     }
@@ -60,15 +73,25 @@ let movePlayer = () => {
 let updatePosition = () => {
     if (keyState['ArrowLeft'] && xPos - speed > 0) { // aller a gauche
         xPos -= speed;
+        player.classList.remove('runright', 'rundown', 'standing')
+        player.classList.add('runleft')
     }
     if (keyState['ArrowRight'] && xPos + speed < (window.innerWidth - 50)) { // aller a droite
         xPos += speed;
+        player.classList.remove('runleft', 'rundown', 'standing')
+        player.classList.add('runright')
     }
     if (keyState['ArrowUp'] && yPos - speed > 60) { // aller en haut
         yPos -= speed;
     }
     if (keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 120)) { // aller en bas
         yPos += speed;
+        player.classList.remove('runright', 'runleft', 'standing')
+        player.classList.add('rundown')
+    }
+    if (!(keyState['ArrowLeft']) && !(keyState['ArrowRight']) && !(keyState['ArrowUp']) && !(keyState['ArrowDown'])) {
+        player.classList.remove('runright', 'runleft', 'rundown')
+        player.classList.add('standing')
     }
 };
 
