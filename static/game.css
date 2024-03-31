@@ -85,8 +85,9 @@
     position: absolute;
     height: 2.5vw;
     width: 2.5vw;
-    background-color: gray;
     z-index: 3;
+    background-image: url(./rock.png);
+    background-size:cover;
 }
 
 .tree {

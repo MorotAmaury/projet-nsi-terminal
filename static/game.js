@@ -41,7 +41,7 @@ let isCollide = (obstacle, player, position) => {
     }
 };
 
-let isCollideToutLesMur = (liste_mur, liste_eau, player, pos) => { 
+let isCollideToutLesMur = (liste_mur, liste_eau, liste_arbre, player, pos) => { 
     let test = false;
     Array.from(liste_mur).forEach(wall => {
         if (isCollide(wall, player, pos)) {
@@ -50,6 +50,11 @@ let isCollideToutLesMur = (liste_mur, liste_eau, player, pos) => {
     });
     Array.from(liste_eau).forEach(water => {
         if (isCollide(water, player, pos)) {
+            test = true;
+        }
+    })
+    Array.from(liste_arbre).forEach(tree => {
+        if (isCollide(tree, player, pos)) {
             test = true;
         }
     })
@@ -151,20 +156,20 @@ let movePlayer = () => {
 };
 
 let updatePosition = () => {
-    if (!isCollideToutLesMur(wall,water,player, "bottom") && keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 75)) { // aller en bas
+    if (!isCollideToutLesMur(wall,water,tree,player, "bottom") && keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 75)) { // aller en bas
         yPos += speed;
         player.classList.remove('runright', 'runleft', 'standing')
         player.classList.add('rundown')
     }
-    if (!isCollideToutLesMur(wall,water, player, "top") && keyState['ArrowUp'] && yPos - speed > 60) { // aller en haut
+    if (!isCollideToutLesMur(wall,water,tree, player, "top") && keyState['ArrowUp'] && yPos - speed > 60) { // aller en haut
         yPos -= speed;
     }
-    if (!isCollideToutLesMur(wall,water, player, "left") && keyState['ArrowLeft'] && xPos - speed > 0) { // aller a gauche
+    if (!isCollideToutLesMur(wall,water,tree, player, "left") && keyState['ArrowLeft'] && xPos - speed > 0) { // aller a gauche
         xPos -= speed;
         player.classList.remove('runright', 'rundown', 'standing')
         player.classList.add('runleft')
     }
-    if (!isCollideToutLesMur(wall,water, player, "right") && keyState['ArrowRight'] && xPos + speed < (window.innerWidth - 50)) { // aller a droite
+    if (!isCollideToutLesMur(wall,water,tree, player, "right") && keyState['ArrowRight'] && xPos + speed < (window.innerWidth - 50)) { // aller a droite
         xPos += speed;
         player.classList.remove('runleft', 'rundown', 'standing')
         player.classList.add('runright')
