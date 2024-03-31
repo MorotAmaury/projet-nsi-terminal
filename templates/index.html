@@ -10,8 +10,19 @@
 </head>
 <body>
     <div class="home">
-        <h1 class="home-title">Le projet de NSI</h1>
-        <a href="{{ url_for('game') }}"><button class="play-btn">Jouer</button></a>
+        <h1 class="home-title">Projet NSI</h1>
+        <div class="biome-txt">Jouer sur le Biome: </div>
+        <div class="biome-selection">
+            <a href="{{ url_for('game', biome='default') }}"><button class="biome-select">Normal</button></a>
+            <a href="{{ url_for('game', biome='desert-de-cristal') }}"><button class="biome-select" id="">Desert de cristal</button></a>
+            <a href="{{ url_for('game', biome='toundra-gelee') }}"><button class="biome-select" id="">Toundra gelee</button></a>
+            <a href="{{ url_for('game' , biome='marais-hante')}}"><button class="biome-select" id="m">Marais hante</button></a>
+            <a href="{{ url_for('game', biome='volcan-actif') }}"><button class="biome-select" id="">Volcan actif</button></a>
+            <a href="{{ url_for('game', biome='plage-tropicale') }}"><button class="biome-select" id="">Plage Tropical</button></a>
+            <a href="{{ url_for('game', biome='montagnes-flottantes') }}"><button class="biome-select" id="">Montagnes Flottantes</button></a>
+            <a href="{{ url_for('game', biome='jungle-perdue') }}"><button class="biome-select" id="">Jungle perdu</button></a>
+        </div>
     </div>
+    <script src="{{ url_for('static', filename='biome.js') }}"></script>
 </body>
 </html>

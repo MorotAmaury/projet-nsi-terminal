@@ -6,7 +6,7 @@ let lava = document.getElementsByClassName('lava');
 let portal = document.getElementById('portal');
 let xPos = window.innerWidth/2; // position horizontal de depart
 let yPos = window.innerHeight/2; // position vertical de depart
-let speed = 3; // vitesse du joueur
+let speed = 2; // vitesse du joueur
 let keyState = {};
 
 
