@@ -290,7 +290,7 @@ document.addEventListener('click', (e) => {
     var testx = `${(e.clientX - posX)*10}px`
     var testy = `${(e.clientY - posY)*10}px`
     
-    if (parseInt(testx) < 500 && parseInt(testx) > -500 || parseInt(testy) < 100 && parseInt(testy) > -100)
+    if (parseInt(testx) < 500 && parseInt(testx) > -500 && parseInt(testy) < 100 && parseInt(testy) > -100)
     {
         missile.classList.add('test')
     }
