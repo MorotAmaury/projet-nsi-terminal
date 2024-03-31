@@ -108,3 +108,16 @@
     display: none;
     background-color: red !important;
 }
+#portal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 6vw;
+    height: 6vw;
+    top: -2,5vw;
+    right: 50%;
+    background-image: url(./portal.png);
+    background-size: cover;
+    z-index: 3;
+}

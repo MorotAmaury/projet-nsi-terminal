@@ -1,6 +1,7 @@
 let player = document.getElementById('player');
 let wall = document.getElementsByClassName('wall');
 let water = document.getElementsByClassName('water');
+let portal = document.getElementById('portal');
 let xPos = 900; // position horizontal de depart
 let yPos = 500; // position vertical de depart
 let speed = 3; // vitesse du joueur
@@ -46,14 +47,23 @@ let isCollideToutLesMur = (liste_mur, liste_eau, player, pos) => {
             test = true;
         }
     });
-    Array.from(liste_eau).forEach(eau => {
-        if (isCollide(eau, player, pos)) {
+    Array.from(liste_eau).forEach(water => {
+        if (isCollide(water, player, pos)) {
             test = true;
         }
     })
     return test;
 };
 
+let isReloading = false;
+
+let travelPortal = () => {
+    if (!isReloading && ((isCollide(portal, player, "top")) || (isCollide(portal, player, "bottom"))
+    || (isCollide(portal, player, "right")) || (isCollide(portal, player, "left")))) {
+        isReloading = true;
+        window.location.reload();
+    }
+};
 
 //TERRAIN
 
@@ -161,6 +171,7 @@ document.addEventListener('keyup', analyseTouche);
 setInterval(() => {
     updatePosition();
     movePlayer();
+    travelPortal();
 }, 1); // Environ 60 images par seconde
 
 
