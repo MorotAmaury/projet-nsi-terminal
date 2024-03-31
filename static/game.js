@@ -2,6 +2,7 @@ let player = document.getElementById('player');
 let wall = document.getElementsByClassName('wall');
 let water = document.getElementsByClassName('water');
 let tree = document.getElementsByClassName('tree');
+let lava = document.getElementsByClassName('lava');
 let portal = document.getElementById('portal');
 let xPos = window.innerWidth/2; // position horizontal de depart
 let yPos = window.innerHeight/2; // position vertical de depart
@@ -41,7 +42,7 @@ let isCollide = (obstacle, player, position) => {
     }
 };
 
-let isCollideToutLesMur = (liste_mur, liste_eau, liste_arbre, player, pos) => { 
+let isCollideToutLesMur = (liste_mur, liste_eau, liste_arbre,liste_lave, player, pos) => { 
     let test = false;
     Array.from(liste_mur).forEach(wall => {
         if (isCollide(wall, player, pos)) {
@@ -55,6 +56,11 @@ let isCollideToutLesMur = (liste_mur, liste_eau, liste_arbre, player, pos) => {
     })
     Array.from(liste_arbre).forEach(tree => {
         if (isCollide(tree, player, pos)) {
+            test = true;
+        }
+    })
+    Array.from(liste_lave).forEach(lava => {
+        if (isCollide(lava, player, pos)) {
             test = true;
         }
     })
@@ -80,15 +86,66 @@ document.addEventListener('DOMContentLoaded', function() {
     let randomBetween = (min, max) => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-
-    // Nombre d'éléments wall et water à générer
-    var numWalls = randomBetween(15, 25);
-    var numWaters = randomBetween(15, 25);
-    var numTrees = randomBetween(15, 25)
-
     // Div game
-    var gameDiv = document.querySelector('.game');    
+    var gameDiv = document.querySelector('.game');
 
+    // Nombre d'éléments wall et water à générer selon le biome
+
+    if (gameDiv.classList.contains("default")) {
+        var numWalls = randomBetween(15, 25);
+        var numWaters = randomBetween(15, 25);
+        var numTrees = randomBetween(20, 30);
+        var numLava = 0
+    }
+    if (gameDiv.classList.contains("desert-de-cristal")) {
+        var numWalls = randomBetween(15, 25);
+        var numWaters = randomBetween(5, 10);
+        var numTrees = randomBetween(5, 10);
+        var numLava = 0
+    }  
+    if (gameDiv.classList.contains("toundra-gelee")) {
+        var numWalls = randomBetween(15, 25);
+        var numWaters = randomBetween(10, 20);
+        var numTrees = randomBetween(5, 10);
+        var numLava = 0
+    }
+    if (gameDiv.classList.contains("marais-hante")) {
+        var numWalls = randomBetween(10, 20);
+        var numWaters = randomBetween(25, 35);
+        var numTrees = randomBetween(30, 40);
+        var numLava = 0
+    }
+    if (gameDiv.classList.contains("volcan-actif")) {
+        var numWalls = randomBetween(25, 35);
+        var numWaters = 0;
+        var numTrees = randomBetween(0, 3);
+        var numLava = randomBetween(20, 30)
+    }
+    if (gameDiv.classList.contains("canyon-abyssal")) {
+        var numWalls = randomBetween(20, 30);
+        var numWaters = randomBetween(10, 20);
+        var numTrees = randomBetween(5, 10);
+        var numLava = randomBetween(0, 5);
+    }
+    if (gameDiv.classList.contains("plage-tropicale")) {
+        var numWalls = randomBetween(0, 5);
+        var numWaters = randomBetween(25, 35);
+        var numTrees = randomBetween(15, 25);
+        var numLava = 0
+    }
+    if (gameDiv.classList.contains("montagnes-flottantes")) {
+        var numWalls = randomBetween(25, 35);
+        var numWaters = randomBetween(7, 15);
+        var numTrees = randomBetween(15, 25);
+        var numLava = 0
+    }
+    if (gameDiv.classList.contains("jungle-perdue")) {
+        var numWalls = randomBetween(0, 7);
+        var numWaters = randomBetween(1, 5);
+        var numTrees = randomBetween(55, 75);
+        var numLava = 0
+    }
+    
     // Fonction pour empécher le spawn dans un bloc
     let notInSpawn = () => {
         let posL = randomBetween(50,  (window.innerWidth - 50));
@@ -115,6 +172,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    let generateLava = () => {
+        for (var i = 0; i < numLava; i++) {
+            var lava = document.createElement('div');
+            lava.classList.add('lava')
+            var position = notInSpawn()
+            lava.style.left = position.posL + 'px';
+            lava.style.top = position.posT + 'px';
+            gameDiv.appendChild(lava);
+        }
+    }
 
     // Fonction pour générer les éléments wall
     let generateWalls = () => {
@@ -124,7 +191,11 @@ document.addEventListener('DOMContentLoaded', function() {
             var position = notInSpawn()
             wall.style.left = position.posL + 'px';
             wall.style.top = position.posT + 'px';
-            gameDiv.appendChild(wall);
+            if ((gameDiv.classList.contains("plage-tropicale")) && (position.posT < 600)) {
+                gameDiv.appendChild(wall)
+            } else if (!(gameDiv.classList.contains("plage-tropicale"))) {
+                gameDiv.appendChild(wall);
+            }
         }
     }
 
@@ -136,13 +207,18 @@ document.addEventListener('DOMContentLoaded', function() {
             var position = notInSpawn()
             tree.style.left = position.posL + 'px';
             tree.style.top = position.posT + 'px';
-            gameDiv.appendChild(tree);
+            if ((gameDiv.classList.contains("plage-tropicale")) && (position.posT < 600)) {
+                gameDiv.appendChild(tree)
+            } else if (!(gameDiv.classList.contains("plage-tropicale"))) {
+                gameDiv.appendChild(tree);
+            }
         }
     }
 
     generateWalls();
     generateWaters();
     generateTrees();
+    generateLava();
 });
 
 
@@ -156,20 +232,20 @@ let movePlayer = () => {
 };
 
 let updatePosition = () => {
-    if (!isCollideToutLesMur(wall,water,tree,player, "bottom") && keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 75)) { // aller en bas
+    if (!isCollideToutLesMur(wall,water,tree,lava,player, "bottom") && keyState['ArrowDown'] && yPos + speed < (window.innerHeight - 75)) { // aller en bas
         yPos += speed;
         player.classList.remove('runright', 'runleft', 'standing')
         player.classList.add('rundown')
     }
-    if (!isCollideToutLesMur(wall,water,tree, player, "top") && keyState['ArrowUp'] && yPos - speed > 60) { // aller en haut
+    if (!isCollideToutLesMur(wall,water,tree,lava, player, "top") && keyState['ArrowUp'] && yPos - speed > 60) { // aller en haut
         yPos -= speed;
     }
-    if (!isCollideToutLesMur(wall,water,tree, player, "left") && keyState['ArrowLeft'] && xPos - speed > 0) { // aller a gauche
+    if (!isCollideToutLesMur(wall,water,tree,lava, player, "left") && keyState['ArrowLeft'] && xPos - speed > 0) { // aller a gauche
         xPos -= speed;
         player.classList.remove('runright', 'rundown', 'standing')
         player.classList.add('runleft')
     }
-    if (!isCollideToutLesMur(wall,water,tree, player, "right") && keyState['ArrowRight'] && xPos + speed < (window.innerWidth - 50)) { // aller a droite
+    if (!isCollideToutLesMur(wall,water,tree,lava, player, "right") && keyState['ArrowRight'] && xPos + speed < (window.innerWidth - 50)) { // aller a droite
         xPos += speed;
         player.classList.remove('runleft', 'rundown', 'standing')
         player.classList.add('runright')

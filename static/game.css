@@ -17,12 +17,52 @@
     width: 100vw;
     height: 100vh;
 }
-.game-container .game
+.game-container .game 
 {
-    background: linear-gradient(to top, #13b40e, #0d8d0d); /* Dégradé du vert clair en haut (#6ca70f) au vert foncé en bas (#004d00) */
     width: 100vw;
     height: calc(100vh - 5vw);
 }
+
+
+/*Variantes selon les biomes*/
+.default
+{
+    background: linear-gradient(to bottom, #3dc039, #2d9b2d); /* Dégradé du vert clair en haut (#6ca70f) au vert foncé en bas (#004d00) */
+}
+.desert-de-cristal {
+    background: linear-gradient(to top, #f7e7ce, #ffffff);
+}
+
+.toundra-gelee {
+    background: linear-gradient(to top, #dcebed, #ffffff);
+}
+
+.marais-hante {
+    background: linear-gradient(to bottom, #388659, #2a6d33);
+}
+
+.volcan-actif {
+    background: linear-gradient(to bottom, #5e5755, #4d1414);
+}
+
+.canyon-abyssal {
+    background: linear-gradient(to bottom, #c47309, #a0522d);
+}
+
+.plage-tropicale {
+    background: linear-gradient(to bottom, #ffe4b5, lightskyblue);
+}
+
+.montagnes-flottantes {
+    background: linear-gradient(to bottom, #708090, #6487a3);
+}
+
+.jungle-perdue {
+    background: linear-gradient(to bottom, #218121, #068106);
+}
+
+
+
 .game-container header,
 .game-container footer
 {
@@ -74,10 +114,21 @@
     position: absolute;
     height: 2.5vw;
     width: 2.5vw;
-    background-color: blue;
+    background-color:lightskyblue;
     z-index: 2;
+    transform: perspective(500px) rotateX(30deg);
 }
-
+.lava {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 2.5vw;
+    width: 2.5vw;
+    background-color:#e7280e;
+    z-index: 2;
+    transform: perspective(500px) rotateX(30deg);
+}
 .wall {
     display: flex;
     align-items: center;
@@ -99,6 +150,7 @@
     width: 1.5vw;
     background-color:  rgb(1, 97, 1);
     z-index: 4;
+    transform: perspective(500px) rotateX(30deg);
 }
 
 #missile-container
