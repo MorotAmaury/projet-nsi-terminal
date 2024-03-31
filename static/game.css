@@ -3,7 +3,7 @@
     position: absolute;
     top: 0.75vw;
     left: 2vw;
-    z-index: 3;
+    z-index: 8;
     color: white;
 }
 .game-container 
@@ -29,7 +29,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2;
+    z-index: 7;
     width: 100vw;
     height: 2.5vw;
     background-color: rgb(41, 41, 41);
@@ -67,16 +67,6 @@
 }
 */
 
-.wall {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    height: 2.5vw;
-    width: 2.5vw;
-    background-color: gray
-}
-
 .water {
     display: flex;
     align-items: center;
@@ -85,7 +75,31 @@
     height: 2.5vw;
     width: 2.5vw;
     background-color: blue;
+    z-index: 2;
 }
+
+.wall {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 2.5vw;
+    width: 2.5vw;
+    background-color: gray;
+    z-index: 3;
+}
+
+.tree {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 1.5vw;
+    width: 1.5vw;
+    background-color:  rgb(1, 97, 1);
+    z-index: 4;
+}
+
 #missile-container
 {
     position: absolute;
@@ -119,5 +133,5 @@
     right: 50%;
     background-image: url(./portal.png);
     background-size: cover;
-    z-index: 3;
+    z-index: 5;
 }
