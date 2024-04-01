@@ -4,6 +4,7 @@ let water = document.getElementsByClassName('water');
 let tree = document.getElementsByClassName('tree');
 let lava = document.getElementsByClassName('lava');
 let portal = document.getElementById('portal');
+let key = document.getElementById('key')
 let xPos = window.innerWidth/2; // position horizontal de depart
 let yPos = window.innerHeight/2; // position vertical de depart
 let speed = 2; // vitesse du joueur
@@ -67,10 +68,20 @@ let isCollideToutLesMur = (liste_mur, liste_eau, liste_arbre,liste_lave, player,
     return test;
 };
 
+let isPossessingKey = false
+
+let possessingKey = () => {
+    if ((isCollide(key, player, "top")) || (isCollide(key, player, "bottom"))
+    || (isCollide(key, player, "right")) || (isCollide(key, player, "left"))) {
+        console.log('collision')
+        isPossessingKey = true;
+    };
+};
+
 let isPageReloading = false;
 
 let travelPortal = () => {
-    if (!isPageReloading && ((isCollide(portal, player, "top")) || (isCollide(portal, player, "bottom"))
+    if (!isPageReloading && isPossessingKey && ((isCollide(portal, player, "top")) || (isCollide(portal, player, "bottom"))
     || (isCollide(portal, player, "right")) || (isCollide(portal, player, "left")))) {
         isPageReloading = true;
         window.location.reload();
@@ -204,6 +215,11 @@ document.addEventListener('DOMContentLoaded', function() {
         for (var i = 0; i < numTrees; i++) {
             var tree = document.createElement('div');
             tree.classList.add('tree');
+            if (gameDiv.classList.contains("plage-tropicale") || gameDiv.classList.contains("desert-de-cristal")){
+                tree.classList.add('palmier')
+            } else {
+                tree.classList.add('normal')
+            }
             var position = notInSpawn()
             tree.style.left = position.posL + 'px';
             tree.style.top = position.posT + 'px';
@@ -215,10 +231,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    let generateKey = () => {
+        var key = document.createElement('div');
+        key.id = 'key';
+        var position = notInSpawn();
+        key.style.left = position.posL + 'px';
+        key.style.top = position.posT + 'px'
+        gameDiv.appendChild(key);
+    }
+
     generateWalls();
     generateWaters();
     generateTrees();
     generateLava();
+    generateKey();
 });
 
 
@@ -271,6 +297,7 @@ document.addEventListener('keyup', analyseTouche);
 setInterval(() => {
     updatePosition();
     movePlayer();
+    possessingKey();
     travelPortal();
 }, 1); // Environ 60 images par seconde
 
@@ -289,18 +316,8 @@ document.addEventListener('click', (e) => {
     let posX = parseInt(player.style.left)
     missile.style.left = posX + "px";
     missile.style.top = posY + "px";
-<<<<<<< HEAD
     var dx = e.clientX - posX;
     var dy = e.clientY - posY;
-=======
-    var testx = `${(e.clientX - posX)*10}px`
-    var testy = `${(e.clientY - posY)*10}px`
-    
-    if (parseInt(testx) < 500 && parseInt(testx) > -500 && parseInt(testy) < 100 && parseInt(testy) > -100)
-    {
-        missile.classList.add('test')
-    }
->>>>>>> 8b48b726b2f79097baf0a48c3c3702d8ea14b346
     
     document.getElementById('missile-container').appendChild(missile);
     
@@ -312,8 +329,3 @@ document.addEventListener('click', (e) => {
         missile.style.transform = `translate(${dx*100}px, ${dy*100}px)`;
     }, 30);
 });
-
-
-
-
-

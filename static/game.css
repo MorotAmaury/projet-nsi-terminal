@@ -27,7 +27,7 @@
 /*Variantes selon les biomes*/
 .default
 {
-    background: linear-gradient(to bottom, #3dc039, #2d9b2d); /* Dégradé du vert clair en haut (#6ca70f) au vert foncé en bas (#004d00) */
+    background: linear-gradient(to bottom, #3dc039, #1f6a1f);
 }
 .desert-de-cristal {
     background: linear-gradient(to top, #f7e7ce, #ffffff);
@@ -114,9 +114,10 @@
     position: absolute;
     height: 2.5vw;
     width: 2.5vw;
-    background-color:lightskyblue;
+    background: linear-gradient(45deg, lightskyblue, rgb(165, 255, 255), lightskyblue, rgb(165, 255, 255), lightskyblue);
     z-index: 2;
     transform: perspective(500px) rotateX(30deg);
+    border-radius: 45%;
 }
 .lava {
     display: flex;
@@ -125,9 +126,10 @@
     position: absolute;
     height: 2.5vw;
     width: 2.5vw;
-    background-color:#e7280e;
+    background: linear-gradient(#e7280e, rgb(250, 92, 0), #e7280e, rgb(250, 92, 0), #e7280e);
     z-index: 2;
     transform: perspective(500px) rotateX(30deg);
+    border-radius: 30%;
 }
 .wall {
     display: flex;
@@ -148,9 +150,17 @@
     position: absolute;
     height: 1.5vw;
     width: 1.5vw;
-    background-color:  rgb(1, 97, 1);
+    background-size: cover;
     z-index: 4;
-    transform: perspective(500px) rotateX(30deg);
+}
+.normal {
+    background-image: url('./tree.png');
+}
+
+.palmier{
+    background-image: url('./palmier.png');
+    background-size: 70%;
+    background-repeat: no-repeat;
 }
 
 #missile-container
@@ -175,16 +185,48 @@
     display: none;
     background-color: red !important;
 }
+
+@keyframes spin { /*Animation du portail */
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 #portal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 1vw;
+    height: 1vw;
+    top: 10%;
+    right: 50%;
+}
+
+#fakeportal {
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
     width: 6vw;
     height: 6vw;
-    top: -2,5vw;
-    right: 50%;
+    top: 5%;
+    right: 47%;
     background-image: url(./portal.png);
-    background-size: cover;
+    background-size: 100%;
     z-index: 5;
+    animation: spin 2s linear infinite;
+}
+
+#key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 2vw;
+    width: 2vw;
+    background-image: url(./key.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 5;
+    transform: rotate(45deg);
 }
