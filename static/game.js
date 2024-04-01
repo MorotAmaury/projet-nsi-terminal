@@ -278,33 +278,31 @@ setInterval(() => {
 //TIR
 
 
+
+
 document.addEventListener('click', (e) => {
     const missile = document.createElement('div');
     missile.classList.add('missile');
     
     let player = document.getElementById('player');
-    let posY = parseInt(player.style.top) - 0.8 * (window.innerWidth / 100);
-    let posX = parseInt(player.style.left) + 1.6 * (window.innerWidth / 100);
+    let posY = parseInt(player.style.top) - 2 * (window.innerWidth / 100);
+    let posX = parseInt(player.style.left)
     missile.style.left = posX + "px";
     missile.style.top = posY + "px";
-    var testx = `${(e.clientX - posX)*10}px`
-    var testy = `${(e.clientY - posY)*10}px`
-    
-    if (parseInt(testx) < 500 && parseInt(testx) > -500 || parseInt(testy) < 100 && parseInt(testy) > -100)
-    {
-        missile.classList.add('test')
-    }
+    var dx = e.clientX - posX;
+    var dy = e.clientY - posY;
     
     document.getElementById('missile-container').appendChild(missile);
     
-    
     setTimeout(async () => {
-        console.log(testx, testy);
-        missile.style.transform = `translate(${testx}, ${testy})`;
-            
-        
+        var distance = Math.sqrt(dx*dx + dy*dy);
+        var speed = 20;
+        var duration = distance / speed;
+        missile.style.transition = `all ${duration}s linear`;
+        missile.style.transform = `translate(${dx*100}px, ${dy*100}px)`;
     }, 30);
 });
+
 
 
 
