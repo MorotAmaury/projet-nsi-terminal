@@ -4,7 +4,7 @@ let water = document.getElementsByClassName('water');
 let tree = document.getElementsByClassName('tree');
 let lava = document.getElementsByClassName('lava');
 let portal = document.getElementById('portal');
-let key = document.getElementById('key')
+let key = document.getElementById('key');
 let xPos = window.innerWidth/2; // position horizontal de depart
 let yPos = window.innerHeight/2; // position vertical de depart
 let speed = 2; // vitesse du joueur
@@ -71,11 +71,10 @@ let isCollideToutLesMur = (liste_mur, liste_eau, liste_arbre,liste_lave, player,
 let isPossessingKey = false
 
 let possessingKey = () => {
-    if ((isCollide(key, player, "top")) || (isCollide(key, player, "bottom"))
-    || (isCollide(key, player, "right")) || (isCollide(key, player, "left"))) {
-        console.log('collision')
-        isPossessingKey = true;
-    };
+    if (isCollide(key, player, 'top')) {
+        isPossessingKey = true
+        key.style.display = "none"
+    }
 };
 
 let isPageReloading = false;
@@ -231,20 +230,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    let generateKey = () => {
-        var key = document.createElement('div');
-        key.id = 'key';
-        var position = notInSpawn();
-        key.style.left = position.posL + 'px';
-        key.style.top = position.posT + 'px'
-        gameDiv.appendChild(key);
-    }
+    var position = notInSpawn()
+    key.style.left = position.posL + "px";
+    key.style.top = position.posT + "px"
 
     generateWalls();
     generateWaters();
     generateTrees();
     generateLava();
-    generateKey();
 });
 
 
