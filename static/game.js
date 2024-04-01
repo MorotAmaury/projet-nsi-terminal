@@ -6,7 +6,7 @@ let lava = document.getElementsByClassName('lava');
 let portal = document.getElementById('portal');
 let xPos = window.innerWidth/2; // position horizontal de depart
 let yPos = window.innerHeight/2; // position vertical de depart
-let speed = 3; // vitesse du joueur
+let speed = 2; // vitesse du joueur
 let keyState = {};
 
 
@@ -289,8 +289,18 @@ document.addEventListener('click', (e) => {
     let posX = parseInt(player.style.left)
     missile.style.left = posX + "px";
     missile.style.top = posY + "px";
+<<<<<<< HEAD
     var dx = e.clientX - posX;
     var dy = e.clientY - posY;
+=======
+    var testx = `${(e.clientX - posX)*10}px`
+    var testy = `${(e.clientY - posY)*10}px`
+    
+    if (parseInt(testx) < 500 && parseInt(testx) > -500 && parseInt(testy) < 100 && parseInt(testy) > -100)
+    {
+        missile.classList.add('test')
+    }
+>>>>>>> 8b48b726b2f79097baf0a48c3c3702d8ea14b346
     
     document.getElementById('missile-container').appendChild(missile);
     

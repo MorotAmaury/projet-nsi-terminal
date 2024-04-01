@@ -13,7 +13,7 @@
     <div class="game-container" id="game">
         <header>
         </header>
-        <div class="game volcan-actif">
+        <div class="game {{biome}}">
             <div id="player" class="standing"></div>
             <div id="portal"></div>
             <div id="missile-container"></div>
@@ -23,5 +23,6 @@
     </div>
     <a href="{{ url_for('home') }}" class="back">Retour</a>
     <script src="{{ url_for('static', filename='game.js') }}"></script>
+    <script src="{{ url_for('static', filename='biome.js') }}"></script>
 </body>
 </html>
