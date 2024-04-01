@@ -58,7 +58,7 @@
 }
 
 .jungle-perdue {
-    background: linear-gradient(to bottom, #218121, #068106);
+    background: linear-gradient(to bottom, #2d792d, #023502);
 }
 
 
@@ -162,7 +162,21 @@
     background-size: 70%;
     background-repeat: no-repeat;
 }
-
+.jungle{
+    background-image: url('./jungle.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.sec{
+    background-image: url('./sec.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.marais{
+    background-image: url('./marais.png');
+    background-size: 70%;
+    background-repeat: no-repeat;
+}
 #missile-container
 {
     position: absolute;

@@ -216,6 +216,12 @@ document.addEventListener('DOMContentLoaded', function() {
             tree.classList.add('tree');
             if (gameDiv.classList.contains("plage-tropicale") || gameDiv.classList.contains("desert-de-cristal")){
                 tree.classList.add('palmier')
+            } else if (gameDiv.classList.contains("jungle-perdue") || gameDiv.classList.contains("montagnes-flottantes")) {
+                tree.classList.add('jungle')
+            } else if (gameDiv.classList.contains("volcan-actif") || gameDiv.classList.contains("toundra-gelee") || gameDiv.classList.contains("canyon-abyssal")) {
+                tree.classList.add('sec')
+            } else if (gameDiv.classList.contains("marais-hante")) {
+                tree.classList.add('marais')
             } else {
                 tree.classList.add('normal')
             }
